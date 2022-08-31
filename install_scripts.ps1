@@ -1,10 +1,10 @@
 Param(
-    [Parameter(Mandatory, HelpMessage = "Enter the MariaDB path")] $db_path,
-    [Parameter(Mandatory, HelpMessage = "Provide an MariaDB user with backup authority")] $db_user,
-    [Parameter(Mandatory, HelpMessage = "Enter the user password")] $db_pwd,
-    [Parameter(Mandatory, HelpMessage = "Enter the path to save the MariaDB backup files")] $backup_path,
-    [Parameter(Mandatory, HelpMessage = "Provide an user with `Log on as a batch job` security policy")] $batch_user,
-    [Parameter(Mandatory, HelpMessage = "Enter the batch user password")] $batch_user_pwd
+    [Parameter(Mandatory, HelpMessage = "Enter the MariaDB path")] [string]$db_path,
+    [Parameter(Mandatory, HelpMessage = "Provide an MariaDB user with backup authority")] [string]$db_user,
+    [Parameter(Mandatory, HelpMessage = "Enter the user password")] [string]$db_pwd,
+    [Parameter(Mandatory, HelpMessage = "Enter the path to save the MariaDB backup files")] [string]$backup_path,
+    [Parameter(Mandatory, HelpMessage = "Provide an user with `Log on as a batch job` security policy")] [string]$batch_user,
+    [Parameter(Mandatory, HelpMessage = "Enter the batch user password")] [string]$batch_user_pwd
 )
 
 # Validate parameters

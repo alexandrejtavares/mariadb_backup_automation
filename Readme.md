@@ -1,6 +1,9 @@
 # MariaDB - Backup Automation #  
 
-Version: 1.0 - 29/08/2022
+## Release History ##
+
+- Release 1.0 - 29/08/2022
+- Release 1.1 - 31/08/2022
 
 ## Author ##
 

@@ -32,7 +32,7 @@
     - **backup_path** -> Folder to save backups (Must exists).  
     - **batch_user** -> Windows Administrator user with *Log on as a batch job* security policy granted.  
     - **batch_user_pwd** -> Windows batch user's password.  
-4) The script will configure all requirements and will create the automation tasks that will run the backups automaticaly:  
+4) The script will configure all requirements and will create the automation tasks that will run the backups automatically:  
    - Set all environment variables needed by automation.  
    - Create a task in Windows Task Scheduler to run the full backup daily, at 1AM.  
    - Create a task in Windows Task Scheduler to run the incremental backup hourly.  

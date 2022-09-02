@@ -1,5 +1,5 @@
 #### VARIABLES ####
-$Logfile = "$PSScriptRoot\mariadb_incrementalbackup.log"
+$Logfile = "$PSScriptRoot\mariadb_fullbackup.log"
 
 #### FUNCTIONS ####
 function WriteLog {
@@ -8,24 +8,21 @@ function WriteLog {
     $LogMessage = "$Stamp $LogString"
     Add-content $LogFile -value $LogMessage
 }
-function Test-Variable {
-    param (
-        $VariableName, 
-        $VariableValue
-    )
-
-    if ([string]::IsNullOrEmpty($VariableValue)){
-        Write-Error "Environment variable $VariableName is not defined as expected. `
-        Execute the script 'install_scripts.ps1' to set the environment variables correctly."
+function Test-Variable([String]$VariableName, [String]$VariableValue){
+    if (-Not $VariableValue){
+        $MessageText = "Environment variable $VariableName is not defined as expected. Execute the script 'install_scripts.ps1' to set the environment variables correctly."
+        Write-Error($MessageText)
+        WriteLog($MessageText)
     }   
 }
 
 # Verify the environment variables
+WriteLog("#################################################################################")
 WriteLog("Verifying if expected Environment variables are defined...")
-Test-Variable('DB_PATH', $Env:DB_PATH)
-Test-Variable('DB_USER', $Env:DB_USER)
-Test-Variable('DB_PWD', $Env:DB_PWD)
-Test-Variable('BACKUP_PATH', $Env:BACKUP_PATH)
+Test-Variable 'DB_PATH' "$Env:DB_PATH"
+Test-Variable 'DB_USER' "$Env:DB_USER"
+Test-Variable 'DB_PWD' "$Env:DB_PWD"
+Test-Variable 'BACKUP_PATH' "$Env:BACKUP_PATH"
 
 # Check if the path "last_backup" exists and create it if it doesn't.
 WriteLog("Checking if 'last_backup\full' folder exists... If it exists, delete its files, otherwise create this one.")

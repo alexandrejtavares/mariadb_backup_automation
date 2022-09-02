@@ -26,7 +26,7 @@ Test-Variable 'BACKUP_PATH' "$Env:BACKUP_PATH"
 
 # Check if the path "last_backup" exists and create it if it doesn't.
 WriteLog("Checking if 'last_backup\full' folder exists... If it exists, delete its files, otherwise create this one.")
-If (-Not (Test-Path "$Env:BACKUP_PATH\last_backup")){ 
+If (-Not (Test-Path "$Env:BACKUP_PATH\last_backup\full")){ 
     New-Item -Path "$Env:BACKUP_PATH\last_backup\full" -ItemType Directory
     WriteLog("Folder 'last_backup\full' created successfully.")
 } else {

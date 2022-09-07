@@ -1,3 +1,6 @@
+#### CONFIG FILE ####
+. $PSScriptRoot\config.ps1
+
 #### VARIABLES ####
 $Logfile = "$PSScriptRoot\mariadb_incrementalbackup.log"
 

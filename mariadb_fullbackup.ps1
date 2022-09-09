@@ -2,7 +2,7 @@
 . $PSScriptRoot\config.ps1
 
 #### VARIABLES ####
-$Logfile = "$PSScriptRoot\mariadb_fullbackup.log"
+$Logfile = $FullBackupLogFile
 
 #### FUNCTIONS ####
 function WriteLog([string]$LogString, [bool]$PrintLog){
@@ -16,7 +16,6 @@ function WriteLog([string]$LogString, [bool]$PrintLog){
 function Test-Variable([String]$VariableName, [String]$VariableValue){
     if (-Not $VariableValue){
         $MessageText = "Environment variable $VariableName is not defined as expected. Execute the script 'install_scripts.ps1' to set the environment variables correctly."
-        #Write-Error($MessageText)
         WriteLog $MessageText $true
     }   
 }
@@ -60,10 +59,19 @@ If (-Not (Test-Path "$Env:BACKUP_PATH\full_$FormatedDate")){
     $MessageText = "Folder full_$FormatedDate created successfully."
     #Write-Output $MessageText
     WriteLog $MessageText $true
+} else {
+    WriteLog "Deleting previous full backup..." $true
+    Get-ChildItem -Path "$Env:BACKUP_PATH\full_$FormatedDate\*" -Recurse | Remove-Item -Recurse
+    WriteLog "Previous full backup deleted successfully." $true
 }
 
-# Full backup command
+# Full backup
 $program = "& " + "'${Env:DB_PATH}" + "\bin\mariabackup' --backup --target-dir=$Env:BACKUP_PATH\full_$FormatedDate --user=$Env:DB_USER --password=$Env:DB_PWD"
+
+# if compress flag is true
+if ($CompressFullBackup){   
+    $program += " --stream=xbstream | Compress-Archive -DestinationPath $Env:BACKUP_PATH\full_$FormatedDate\mariadb_fullbackup.zip"
+}
 
 try{
     # Full Backup

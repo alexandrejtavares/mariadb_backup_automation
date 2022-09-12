@@ -33,3 +33,9 @@ Version: 1.0 - 29/08/2022
    - Set all environment variables needed by automation.  
    - Create a task in Windows Task Scheduler to run the full backup daily, at 1AM.  
    - Create a task in Windows Task Scheduler to run the incremental backup hourly.  
+
+## Tips ##
+
+- Unblock downloaded script to run in PowerShell:
+  
+    `Get-ChildItem -Filter *.ps1 | Unblock-File`

@@ -1,24 +1,9 @@
-#### CONFIG FILE ####
+#### EXTERNAL FILES ####
 . $PSScriptRoot\config.ps1
+. $PSScriptRoot\util.ps1
 
 #### VARIABLES ####
 $Logfile = $IncrementalBackupLogFile
-
-#### FUNCTIONS ####
-function Test-Variable([String]$VariableName, [String]$VariableValue) {
-    if (-Not $VariableValue) {
-        $MessageText = "Environment variable $VariableName is not defined as expected. Execute the script 'install_scripts.ps1' to set the environment variables correctly."
-        WriteLog $MessageText $true
-    }
-}
-function WriteLog([string]$LogString, [bool]$PrintLog) {
-    $Stamp = (Get-Date).toString("yyyy/MM/dd HH:mm:ss")
-    $LogMessage = "$Stamp $LogString"
-    Add-content $LogFile -value $LogMessage
-    if ($PrintLog) {
-        Write-Output($LogString)
-    }
-}
 
 $FormatedDate = (Get-Date).toString("yyyyMMdd_HHmm")
 $FormatedDateWithoutTime = (Get-Date).toString("yyyyMMdd")
@@ -31,7 +16,6 @@ Test-Variable 'DB_USER' $Env:DB_USER
 Test-Variable 'DB_PWD' $Env:DB_PWD
 Test-Variable 'BACKUP_PATH' $Env:BACKUP_PATH
 WriteLog "Environment variables found sucessfuly." $true
-
 
 # Checks if a backup full exists
 WriteLog "Verifying if the backup full was executed previously in folder full_$FormatedDateWithoutTime..." $true
@@ -61,7 +45,7 @@ If (-Not (Test-Path "$Env:BACKUP_PATH\incremental_$FormatedDate")) {
         WriteLog "Previous incremental backup deleted successfully." $true
     }
     catch {
-        $MessageText = "Error deleting previous incremental backup."
+        $MessageText = "Error deleting previous incremental backup folder."
         WriteLog $MessageText $true
     }   
 }
